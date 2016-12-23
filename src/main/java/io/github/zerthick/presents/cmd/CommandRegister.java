@@ -30,6 +30,13 @@ public class CommandRegister {
 
     public static void registerCmds(Presents plugin) {
 
+        CommandSpec setNaughty = CommandSpec.builder()
+                .permission("presents.command.naughty")
+                .arguments(GenericArguments.user(CommandArgs.RECEIVER), GenericArguments.bool(CommandArgs.NAUGHTY))
+                .description(Text.of("Set a user to be either on the naughty or nice list"))
+                .executor(new SetNaughtyExecutor(plugin))
+                .build();
+
         CommandSpec presentsCreateRandom = CommandSpec.builder()
                 .permission("presents.command.createrandom")
                 .arguments(GenericArguments.optional(GenericArguments.integer(CommandArgs.ITEM_WEIGHT)))
@@ -65,6 +72,7 @@ public class CommandRegister {
                 .child(presentsSend, "send")
                 .child(presentsDeliveryLocation, "deliveryLocation", "devloc")
                 .child(presentsCreateRandom, "createRandom", "rand")
+                .child(setNaughty, "setNaughty", "naughty")
                 .build();
 
         Sponge.getCommandManager().register(plugin, presents, "presents", "gifts");

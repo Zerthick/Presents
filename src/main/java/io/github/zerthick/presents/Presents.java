@@ -131,7 +131,8 @@ public class Presents {
                     if(naughtyListManager.isNaughty(receiverUUID)) {
                         //Naughty players get coal!
                         for(int i = 0; i < 5; i++) {
-                            chest.getInventory().offer(ItemStack.of(ItemTypes.COAL, ThreadLocalRandom.current().nextInt(1, 17)));
+                            ItemStackSnapshot coalItemStack = ItemStack.of(ItemTypes.COAL, ThreadLocalRandom.current().nextInt(1, 17)).createSnapshot();
+                            chest.getInventory().offer(new Present(coalItemStack, "Santa Clause", "").toItemStack());
                         }
                     } else if(!randomPresentManager.isEmpty()){
                         randomPresentManager.nextPresentItems(5).forEach(presentItem -> chest.getInventory().offer(new Present(presentItem, "Santa Clause", "").toItemStack()));
@@ -155,5 +156,13 @@ public class Presents {
 
     public void createRandomPresent(ItemStack present, double weight) {
         randomPresentManager.addPresent(present.createSnapshot(), weight);
+    }
+
+    public void setUserNaughty(User user, boolean naughty) {
+        if (naughty) {
+            naughtyListManager.makeNaughty(user);
+        } else {
+            naughtyListManager.makeNice(user);
+        }
     }
 }

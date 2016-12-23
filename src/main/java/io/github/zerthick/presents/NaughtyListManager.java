@@ -19,7 +19,6 @@
 
 package io.github.zerthick.presents;
 
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 
 import java.util.Set;
@@ -41,8 +40,8 @@ public class NaughtyListManager {
         naughtyList.remove(playerUUID);
     }
 
-    public void makeNaughty(Player player) {
-        makeNaughty(player.getUniqueId());
+    public void makeNaughty(User user) {
+        makeNaughty(user.getUniqueId());
     }
 
     public void makeNaughty(UUID playerUUID) {
