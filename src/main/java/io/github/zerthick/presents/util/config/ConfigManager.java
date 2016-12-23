@@ -54,7 +54,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getValue(TypeToken.of(PresentDeliveryLocationManager.class));
+            return node.getNode("locationData").getValue(TypeToken.of(PresentDeliveryLocationManager.class));
         } else {
             return new PresentDeliveryLocationManager(new HashMap<>());
         }
@@ -65,7 +65,7 @@ public class ConfigManager {
         ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder().setPath(configDir).build();
 
         CommentedConfigurationNode node = loader.load();
-        node.setValue(TypeToken.of(PresentDeliveryLocationManager.class), locationManager);
+        node.getNode("locationData").setValue(TypeToken.of(PresentDeliveryLocationManager.class), locationManager);
         loader.save(node);
     }
 
@@ -75,7 +75,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getValue(TypeToken.of(PresentManager.class));
+            return node.getNode("presentData").getValue(TypeToken.of(PresentManager.class));
         } else {
             return new PresentManager(new HashMap<>());
         }
@@ -86,7 +86,7 @@ public class ConfigManager {
         ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder().setPath(configDir).build();
 
         CommentedConfigurationNode node = loader.load();
-        node.setValue(TypeToken.of(PresentManager.class), presentManager);
+        node.getNode("presentData").setValue(TypeToken.of(PresentManager.class), presentManager);
         loader.save(node);
     }
 
@@ -96,7 +96,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getValue(TypeToken.of(RandomPresentManager.class));
+            return node.getNode("randomPresentData").getValue(TypeToken.of(RandomPresentManager.class));
         } else {
             return new RandomPresentManager(new HashMap<>());
         }
@@ -107,7 +107,7 @@ public class ConfigManager {
         ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder().setPath(configDir).build();
 
         CommentedConfigurationNode node = loader.load();
-        node.setValue(TypeToken.of(RandomPresentManager.class), randomPresentManager);
+        node.getNode("randomPresentData").setValue(TypeToken.of(RandomPresentManager.class), randomPresentManager);
         loader.save(node);
     }
 
@@ -117,18 +117,18 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getValue(TypeToken.of(NaughtyListManager.class));
+            return node.getNode("naughtyListData").getValue(TypeToken.of(NaughtyListManager.class));
         } else {
             return new NaughtyListManager(new HashSet<>());
         }
     }
 
-    public static void saveNaughyListManager(NaughtyListManager naughtyListManager, Presents plugin) throws IOException, ObjectMappingException {
+    public static void saveNaughtyListManager(NaughtyListManager naughtyListManager, Presents plugin) throws IOException, ObjectMappingException {
         Path configDir = plugin.getDefaultConfigDir().resolve("NaughtyList.conf");
         ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder().setPath(configDir).build();
 
         CommentedConfigurationNode node = loader.load();
-        node.setValue(TypeToken.of(NaughtyListManager.class), naughtyListManager);
+        node.getNode("naughtyListData").setValue(TypeToken.of(NaughtyListManager.class), naughtyListManager);
         loader.save(node);
     }
 }

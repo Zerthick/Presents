@@ -55,7 +55,6 @@ import org.spongepowered.api.world.World;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -120,9 +119,9 @@ public class Presents {
             ConfigManager.savePresentManager(presentManager, this);
             ConfigManager.saveRandomPresentManager(randomPresentManager, this);
             ConfigManager.savePresentDeliveryLocationManager(presentDeliveryLocationManager, this);
-            ConfigManager.saveNaughyListManager(naughtyListManager, this);
+            ConfigManager.saveNaughtyListManager(naughtyListManager, this);
         } catch (IOException | ObjectMappingException e) {
-            logger.error("Error saving configs! Error: " + Arrays.toString(e.getStackTrace()));
+            logger.error("Error saving configs! Error: " + e.getMessage());
         }
 
     }
