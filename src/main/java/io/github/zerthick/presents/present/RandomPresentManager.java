@@ -20,7 +20,6 @@
 package io.github.zerthick.presents.present;
 
 import io.github.zerthick.presents.util.random.RandomCollection;
-import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,25 +27,33 @@ import java.util.Map;
 
 public class RandomPresentManager {
 
-    private RandomCollection<ItemStackSnapshot> presentRandomCollection;
+    private RandomCollection<Present> presentRandomCollection;
 
-    public RandomPresentManager(Map<Double, ItemStackSnapshot> weightMap) {
+    private int defaultRandomPresentAmount;
+
+    public RandomPresentManager(Map<Double, Present> presentWeightMap, int defaultPresentAmount) {
         presentRandomCollection = new RandomCollection<>();
-        weightMap.forEach((aDouble, present) -> presentRandomCollection.add(aDouble, present));
+        presentWeightMap.forEach((aDouble, present) -> presentRandomCollection.add(aDouble, present));
+
+        this.defaultRandomPresentAmount = defaultPresentAmount;
     }
 
-    public void addPresent(ItemStackSnapshot presentItem, double weight) {
-        presentRandomCollection.add(weight, presentItem);
+    public void addPresent(Present present, double weight) {
+        presentRandomCollection.add(weight, present);
     }
 
-    public ItemStackSnapshot nextPresentItem() {
+    public Present nextPresent() {
         return presentRandomCollection.next();
     }
 
-    public Collection<ItemStackSnapshot> nextPresentItems(int amount) {
-        Collection<ItemStackSnapshot> presents = new ArrayList<>(amount);
+    public Collection<Present> nextPresentItems() {
+        return nextPresentItems(defaultRandomPresentAmount);
+    }
+
+    public Collection<Present> nextPresentItems(int amount) {
+        Collection<Present> presents = new ArrayList<>(amount);
         for(int i = 0; i < amount; i++) {
-            presents.add(nextPresentItem());
+            presents.add(nextPresent());
         }
         return presents;
     }
@@ -55,7 +62,15 @@ public class RandomPresentManager {
         return presentRandomCollection.isEmpty();
     }
 
-    public Map<Double, ItemStackSnapshot> getPresentItemWeightMap() {
+    public Map<Double, Present> getPresentWeightMap() {
         return presentRandomCollection.getWeightMap();
+    }
+
+    public int getDefaultRandomPresentAmount() {
+        return defaultRandomPresentAmount;
+    }
+
+    public void setDefaultRandomPresentAmount(int defaultRandomPresentAmount) {
+        this.defaultRandomPresentAmount = defaultRandomPresentAmount;
     }
 }

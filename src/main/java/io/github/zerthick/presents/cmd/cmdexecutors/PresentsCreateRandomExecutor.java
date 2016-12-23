@@ -31,6 +31,7 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.util.Optional;
 
@@ -46,18 +47,24 @@ public class PresentsCreateRandomExecutor extends AbstractCommandExecutor {
             Player player = (Player) src;
 
             Optional<ItemStack> itemStackOptional = player.getItemInHand(HandTypes.MAIN_HAND);
-            Optional<Integer> itemWeightOptional = args.getOne(CommandArgs.ITEM_WEIGHT);
+            Optional<String> senderOptional = args.getOne(CommandArgs.SENDER);
+            Optional<String> noteOptional = args.getOne(CommandArgs.NOTE);
 
             if (itemStackOptional.isPresent()) {
-                ItemStack presentItemStack = itemStackOptional.get();
-                Integer itemWeight = itemWeightOptional.orElse(1);
+                if (senderOptional.isPresent()) {
+                    ItemStack presentItemStack = itemStackOptional.get();
+                    String sender = senderOptional.get();
+                    String note = noteOptional.orElse("");
 
-                plugin.createRandomPresent(presentItemStack, itemWeight);
-                player.setItemInHand(HandTypes.MAIN_HAND, null);
+                    plugin.createRandomPresent(presentItemStack, sender, TextSerializers.FORMATTING_CODE.deserialize(note), 1);
+                    player.setItemInHand(HandTypes.MAIN_HAND, null);
 
-                player.sendMessage(Text.of(TextColors.BLUE, "Successfully created random present from ",
-                        TextColors.AQUA, ItemUtils.getItemDisplayName(presentItemStack),
-                        TextColors.BLUE, " with a weight of ", TextColors.AQUA, itemWeight));
+                    player.sendMessage(Text.of(TextColors.BLUE, "Successfully created random present from ",
+                            TextColors.AQUA, ItemUtils.getItemDisplayName(presentItemStack)));
+                } else {
+                    player.sendMessage(Text.of(TextColors.RED, "You must specify a sender for the random item!"));
+
+                }
             } else {
                 player.sendMessage(Text.of(TextColors.RED, "Hold the item in your main hand you wish to send!"));
             }

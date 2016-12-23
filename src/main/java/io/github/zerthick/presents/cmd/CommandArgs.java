@@ -25,7 +25,7 @@ import org.spongepowered.api.text.Text;
 public class CommandArgs {
 
     public static final LiteralText RECEIVER = Text.of("Receiver");
+    public static final LiteralText SENDER = Text.of("Sender");
     public static final LiteralText NOTE = Text.of("Note");
-    public static final LiteralText ITEM_WEIGHT = Text.of("ItemWeight");
     public static final LiteralText NAUGHTY = Text.of("Naughty");
 }

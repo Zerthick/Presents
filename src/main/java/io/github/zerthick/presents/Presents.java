@@ -33,7 +33,6 @@ import org.slf4j.Logger;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.block.tileentity.carrier.Chest;
 import org.spongepowered.api.config.ConfigDir;
-import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.Listener;
@@ -76,10 +75,6 @@ public class Presents {
     @ConfigDir(sharedRoot = false)
     private Path defaultConfigDir;
 
-    @Inject
-    @DefaultConfig(sharedRoot = false)
-    private Path defaultConfig;
-
     private PresentManager presentManager;
     private RandomPresentManager randomPresentManager;
     private PresentDeliveryLocationManager presentDeliveryLocationManager;
@@ -97,10 +92,6 @@ public class Presents {
         return defaultConfigDir;
     }
 
-    public Path getDefaultConfig() {
-        return defaultConfig;
-    }
-
     @Listener
     public void onServerInit(GameInitializationEvent event) {
 
@@ -115,6 +106,10 @@ public class Presents {
 
     @Listener
     public void onServerStop(GameStoppedServerEvent event) {
+
+        //Create config directory if it doesn't exist
+        defaultConfigDir.toFile().mkdirs();
+
         try {
             ConfigManager.savePresentManager(presentManager, this);
             ConfigManager.saveRandomPresentManager(randomPresentManager, this);
@@ -171,12 +166,12 @@ public class Presents {
                     //Give random-presents
                     if(naughtyListManager.isNaughty(receiverUUID)) {
                         //Naughty players get coal!
-                        for(int i = 0; i < 5; i++) {
+                        for (int i = 0; i < randomPresentManager.getDefaultRandomPresentAmount(); i++) {
                             ItemStackSnapshot coalItemStack = ItemStack.of(ItemTypes.COAL, ThreadLocalRandom.current().nextInt(1, 17)).createSnapshot();
                             chest.getInventory().offer(new Present(coalItemStack, "Santa Clause", "").toItemStack());
                         }
                     } else if(!randomPresentManager.isEmpty()){
-                        randomPresentManager.nextPresentItems(5).forEach(presentItem -> chest.getInventory().offer(new Present(presentItem, "Santa Clause", "").toItemStack()));
+                        randomPresentManager.nextPresentItems().forEach(presentItem -> chest.getInventory().offer(presentItem.toItemStack()));
                     }
                 });
             }
@@ -195,15 +190,15 @@ public class Presents {
         return presentDeliveryLocationManager.hasPresentDeliveryLocation(user);
     }
 
-    public void createRandomPresent(ItemStack present, double weight) {
-        randomPresentManager.addPresent(present.createSnapshot(), weight);
-    }
-
     public void setUserNaughty(User user, boolean naughty) {
         if (naughty) {
             naughtyListManager.makeNaughty(user);
         } else {
             naughtyListManager.makeNice(user);
         }
+    }
+
+    public void createRandomPresent(ItemStack presentItemStack, String sender, Text note, Integer itemWeight) {
+        randomPresentManager.addPresent(new Present(presentItemStack.createSnapshot(), sender, "", note), itemWeight);
     }
 }

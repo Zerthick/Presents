@@ -39,7 +39,8 @@ public class CommandRegister {
 
         CommandSpec presentsCreateRandom = CommandSpec.builder()
                 .permission("presents.command.createrandom")
-                .arguments(GenericArguments.optional(GenericArguments.integer(CommandArgs.ITEM_WEIGHT)))
+                .arguments(GenericArguments.string(CommandArgs.SENDER),
+                        GenericArguments.optional(GenericArguments.remainingJoinedStrings(CommandArgs.NOTE)))
                 .description(Text.of("Create random present item"))
                 .executor(new PresentsCreateRandomExecutor(plugin))
                 .build();

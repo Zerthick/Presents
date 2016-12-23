@@ -20,12 +20,12 @@
 package io.github.zerthick.presents.util.config.serializers;
 
 import com.google.common.reflect.TypeToken;
+import io.github.zerthick.presents.present.Present;
 import io.github.zerthick.presents.present.RandomPresentManager;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import ninja.leaping.configurate.objectmapping.serialize.TypeSerializer;
 import ninja.leaping.configurate.objectmapping.serialize.TypeSerializers;
-import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
 import java.util.Map;
 
@@ -38,18 +38,20 @@ public class RandomPresentManagerSerializer implements TypeSerializer<RandomPres
     @Override
     public RandomPresentManager deserialize(TypeToken<?> type, ConfigurationNode value) throws ObjectMappingException {
 
-        Map<Double, ItemStackSnapshot> doubleItemStackSnapshotMap = value.getNode("randomPresents").getValue(
-                new TypeToken<Map<Double, ItemStackSnapshot>>() {
+        Map<Double, Present> doubleItemStackSnapshotMap = value.getNode("randomPresents").getValue(
+                new TypeToken<Map<Double, Present>>() {
                 }
         );
+        int defaultRandomPresentAmount = value.getNode("defaultRandomPresentAmount").getInt();
 
-        return new RandomPresentManager(doubleItemStackSnapshotMap);
+        return new RandomPresentManager(doubleItemStackSnapshotMap, defaultRandomPresentAmount);
     }
 
     @Override
     public void serialize(TypeToken<?> type, RandomPresentManager obj, ConfigurationNode value) throws ObjectMappingException {
-        value.getNode("randomPresents").setValue(new TypeToken<Map<Double, ItemStackSnapshot>>() {
+        value.getNode("randomPresents").setValue(new TypeToken<Map<Double, Present>>() {
                                                  },
-                obj.getPresentItemWeightMap());
+                obj.getPresentWeightMap());
+        value.getNode("defaultRandomPresentAmount").setValue(TypeToken.of(Integer.class), obj.getDefaultRandomPresentAmount());
     }
 }
