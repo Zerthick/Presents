@@ -106,8 +106,8 @@ public class Presents {
     @Listener
     public void onItemInteract(InteractItemEvent.Secondary event, @Root Player player, @Getter("getItemStack") ItemStackSnapshot itemStackSnapshot) {
         if (itemStackSnapshot.getType() == ItemTypes.CHEST_MINECART) {
-            itemStackSnapshot.get(PresentDataKeys.PRESENT_ITEM).ifPresent(itemStack -> {
-                player.setItemInHand(event.getHandType(), itemStack);
+            itemStackSnapshot.get(PresentDataKeys.PRESENT_ITEM).ifPresent(presentItemStackSnapshot -> {
+                player.setItemInHand(event.getHandType(), presentItemStackSnapshot.createStack());
                 event.setCancelled(true);
             });
         }
@@ -142,7 +142,7 @@ public class Presents {
     }
 
     public void sendPresent(ItemStack present, Player sender, User receiver, Text note) {
-        presentManager.sendPresent(receiver.getUniqueId(), new Present(present, sender.getName(), receiver.getName(), note));
+        presentManager.sendPresent(receiver.getUniqueId(), new Present(present.createSnapshot(), sender.getName(), receiver.getName(), note));
     }
 
     public void setPresentDeliveryLocation(User user, Location<World> location) {
@@ -154,6 +154,6 @@ public class Presents {
     }
 
     public void createRandomPresent(ItemStack present, double weight) {
-        randomPresentManager.addPresent(present, weight);
+        randomPresentManager.addPresent(present.createSnapshot(), weight);
     }
 }

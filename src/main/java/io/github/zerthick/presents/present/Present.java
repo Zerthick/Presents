@@ -24,21 +24,22 @@ import io.github.zerthick.presents.present.data.Mutable.PresentItemData;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.api.text.Text;
 
 public class Present {
 
-    private final ItemStack present;
+    private final ItemStackSnapshot present;
     private final String sender;
     private final String receiver;
     private final Text note;
 
-    public Present(ItemStack present, String sender, String receiver) {
+    public Present(ItemStackSnapshot present, String sender, String receiver) {
         this(present, sender, receiver, Text.EMPTY);
     }
 
-    public Present(ItemStack present, String sender, String receiver, Text note) {
-        this.present = present.copy();
+    public Present(ItemStackSnapshot present, String sender, String receiver, Text note) {
+        this.present = present;
         this.sender = sender;
         this.receiver = receiver;
         this.note = note;
@@ -52,7 +53,7 @@ public class Present {
         return itemStack;
     }
 
-    public ItemStack getPresent() {
+    public ItemStackSnapshot getPresent() {
         return present;
     }
 

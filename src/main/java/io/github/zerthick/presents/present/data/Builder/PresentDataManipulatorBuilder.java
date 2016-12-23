@@ -27,7 +27,7 @@ import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.manipulator.DataManipulatorBuilder;
 import org.spongepowered.api.data.persistence.AbstractDataBuilder;
 import org.spongepowered.api.data.persistence.InvalidDataException;
-import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
 import java.util.Optional;
 
@@ -50,7 +50,7 @@ public class PresentDataManipulatorBuilder extends AbstractDataBuilder<PresentIt
     @Override
     public Optional<PresentItemData> buildContent(DataView container) throws InvalidDataException {
         if(container.contains(PresentDataKeys.PRESENT_ITEM.getQuery())) {
-            Optional<ItemStack> itemStackOptional = container.getObject(PresentDataKeys.PRESENT_ITEM.getQuery(), ItemStack.class);
+            Optional<ItemStackSnapshot> itemStackOptional = container.getSerializable(PresentDataKeys.PRESENT_ITEM.getQuery(), ItemStackSnapshot.class);
             if(itemStackOptional.isPresent()) {
                 return Optional.of(new PresentItemData(itemStackOptional.get()));
             }

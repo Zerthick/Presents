@@ -25,19 +25,19 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.manipulator.immutable.common.AbstractImmutableSingleData;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
-import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
-public class ImmutablePresentItemData extends AbstractImmutableSingleData<ItemStack, ImmutablePresentItemData, PresentItemData> {
+public class ImmutablePresentItemData extends AbstractImmutableSingleData<ItemStackSnapshot, ImmutablePresentItemData, PresentItemData> {
 
     public ImmutablePresentItemData() {
-        this(null);
+        this(ItemStackSnapshot.NONE);
     }
 
-    public ImmutablePresentItemData(ItemStack value) {
+    public ImmutablePresentItemData(ItemStackSnapshot value) {
         super(value, PresentDataKeys.PRESENT_ITEM);
     }
 
-    private ImmutableValue<ItemStack> presentItemStack() {
+    private ImmutableValue<ItemStackSnapshot> presentItemStack() {
         return Sponge.getRegistry().getValueFactory().createValue(PresentDataKeys.PRESENT_ITEM, getValue()).asImmutable();
     }
 

@@ -27,26 +27,26 @@ import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.manipulator.mutable.common.AbstractSingleData;
 import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.value.mutable.Value;
-import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
 import java.util.Optional;
 
-public class PresentItemData extends AbstractSingleData<ItemStack, PresentItemData, ImmutablePresentItemData> {
+public class PresentItemData extends AbstractSingleData<ItemStackSnapshot, PresentItemData, ImmutablePresentItemData> {
 
     public PresentItemData() {
-        this(null);
+        this(ItemStackSnapshot.NONE);
     }
 
-    public PresentItemData(ItemStack value) {
+    public PresentItemData(ItemStackSnapshot value) {
         super(value, PresentDataKeys.PRESENT_ITEM);
     }
 
-    private Value<ItemStack> presentItem() {
+    private Value<ItemStackSnapshot> presentItem() {
         return Sponge.getRegistry().getValueFactory().createValue(PresentDataKeys.PRESENT_ITEM, getValue());
     }
 
     @Override
-    protected Value<ItemStack> getValueGetter() {
+    protected Value<ItemStackSnapshot> getValueGetter() {
         return presentItem();
     }
 
@@ -62,7 +62,7 @@ public class PresentItemData extends AbstractSingleData<ItemStack, PresentItemDa
     @Override
     public Optional<PresentItemData> from(DataContainer container) {
         if(container.contains(PresentDataKeys.PRESENT_ITEM.getQuery())) {
-            container.getObject(PresentDataKeys.PRESENT_ITEM.getQuery(), ItemStack.class)
+            container.getObject(PresentDataKeys.PRESENT_ITEM.getQuery(), ItemStackSnapshot.class)
                     .ifPresent(this::setValue);
             return Optional.of(this);
         }
