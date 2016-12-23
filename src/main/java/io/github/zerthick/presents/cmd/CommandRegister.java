@@ -31,22 +31,29 @@ public class CommandRegister {
     public static void registerCmds(Presents plugin) {
 
         CommandSpec setNaughty = CommandSpec.builder()
-                .permission("presents.command.naughty")
+                .permission("presents.command.set.naughty")
                 .arguments(GenericArguments.user(CommandArgs.RECEIVER), GenericArguments.bool(CommandArgs.NAUGHTY))
                 .description(Text.of("Set a user to be either on the naughty or nice list"))
                 .executor(new SetNaughtyExecutor(plugin))
                 .build();
 
+        CommandSpec presentsSetRandom = CommandSpec.builder()
+                .permission("presents.command.set.randomdefault")
+                .arguments(GenericArguments.integer(CommandArgs.AMOUNT))
+                .description(Text.of("Sets the amount of random gifts given"))
+                .executor(new SetDefaultRandomPresentExecutor(plugin))
+                .build();
+
         CommandSpec presentsCreateRandom = CommandSpec.builder()
-                .permission("presents.command.createrandom")
-                .arguments(GenericArguments.string(CommandArgs.SENDER),
+                .permission("presents.command.create.random")
+                .arguments(GenericArguments.integer(CommandArgs.SENDER),
                         GenericArguments.optional(GenericArguments.remainingJoinedStrings(CommandArgs.NOTE)))
                 .description(Text.of("Create random present item"))
                 .executor(new PresentsCreateRandomExecutor(plugin))
                 .build();
 
         CommandSpec presentsDeliveryLocation = CommandSpec.builder()
-                .permission("presents.command.deliverylocation")
+                .permission("presents.command.set.deliverylocation")
                 .arguments(GenericArguments.optional(GenericArguments.user(CommandArgs.RECEIVER)))
                 .description(Text.of("Set delivery location of a use"))
                 .executor(new PresentsDeliveryLocationExecutor(plugin))
@@ -66,14 +73,20 @@ public class CommandRegister {
                 .executor(new PresentsDeliverExecutor(plugin))
                 .build();
 
+        CommandSpec set = CommandSpec.builder()
+                .permission("presents.command.set")
+                .child(setNaughty, "naughty")
+                .child(presentsSetRandom, "randomDefault")
+                .child(presentsDeliveryLocation, "deliveryLocation")
+                .build();
+
         CommandSpec presents = CommandSpec.builder()
                 .permission("presents.command")
                 .executor(new PresentsExecutor(plugin))
                 .child(presentsDeliver, "deliver")
                 .child(presentsSend, "send")
-                .child(presentsDeliveryLocation, "deliveryLocation", "devloc")
                 .child(presentsCreateRandom, "createRandom", "rand")
-                .child(setNaughty, "setNaughty", "naughty")
+                .child(set, "set")
                 .build();
 
         Sponge.getCommandManager().register(plugin, presents, "presents", "gifts");

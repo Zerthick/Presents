@@ -28,4 +28,5 @@ public class CommandArgs {
     public static final LiteralText SENDER = Text.of("Sender");
     public static final LiteralText NOTE = Text.of("Note");
     public static final LiteralText NAUGHTY = Text.of("Naughty");
+    public static final LiteralText AMOUNT = Text.of("Amount");
 }

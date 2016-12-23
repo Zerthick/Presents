@@ -198,6 +198,10 @@ public class Presents {
         }
     }
 
+    public void setRandomPresentDefaultAmount(int amount) {
+        randomPresentManager.setDefaultRandomPresentAmount(amount);
+    }
+
     public void createRandomPresent(ItemStack presentItemStack, String sender, Text note, Integer itemWeight) {
         randomPresentManager.addPresent(new Present(presentItemStack.createSnapshot(), sender, "", note), itemWeight);
     }
