@@ -71,8 +71,6 @@ public class Presents {
     private PresentDeliveryLocationManager presentDeliveryLocationManager;
     private NaughtyListManager naughtyListManager;
 
-    private CommandRegister commandRegister;
-
     public Logger getLogger() {
         return logger;
     }
@@ -93,8 +91,7 @@ public class Presents {
         naughtyListManager = new NaughtyListManager(new HashSet<>());
 
         //Register commands
-        commandRegister = new CommandRegister(this);
-        commandRegister.registerCmds();
+        CommandRegister.registerCmds(this);
     }
 
     @Listener

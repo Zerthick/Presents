@@ -27,20 +27,11 @@ import io.github.zerthick.presents.cmd.cmdexecutors.PresentsSendExecutor;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
-import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.text.Text;
 
 public class CommandRegister {
 
-    private Presents plugin;
-    private PluginContainer pluginContainer;
-
-    public CommandRegister(Presents plugin) {
-        this.plugin = plugin;
-        pluginContainer = plugin.getInstance();
-    }
-
-    public void registerCmds() {
+    public static void registerCmds(Presents plugin) {
 
         CommandSpec presentsDeliveryLocation = CommandSpec.builder()
                 .permission("presents.command.deliveryLocation")
