@@ -105,7 +105,7 @@ public class Presents {
 
     @Listener
     public void onItemInteract(InteractItemEvent.Secondary event, @Root Player player, @Getter("getItemStack") ItemStackSnapshot itemStackSnapshot) {
-        if(itemStackSnapshot.getType() == ItemTypes.CHEST) {
+        if (itemStackSnapshot.getType() == ItemTypes.CHEST_MINECART) {
             itemStackSnapshot.get(PresentDataKeys.PRESENT_ITEM).ifPresent(itemStack -> {
                 player.setItemInHand(event.getHandType(), itemStack);
                 event.setCancelled(true);

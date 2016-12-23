@@ -38,14 +38,14 @@ public class Present {
     }
 
     public Present(ItemStack present, String sender, String receiver, Text note) {
-        this.present = present;
+        this.present = present.copy();
         this.sender = sender;
         this.receiver = receiver;
         this.note = note;
     }
 
     public ItemStack toItemStack() {
-        ItemStack itemStack = ItemStack.of(ItemTypes.CHEST, 1);
+        ItemStack itemStack = ItemStack.of(ItemTypes.CHEST_MINECART, 1);
         itemStack.offer(Keys.DISPLAY_NAME, Text.of("From: ", sender));
         itemStack.offer(Keys.ITEM_LORE, ImmutableList.of(note));
         itemStack.offer(new PresentItemData(present));
