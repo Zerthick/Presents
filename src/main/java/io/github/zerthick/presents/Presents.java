@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.block.tileentity.carrier.Chest;
 import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.Listener;
@@ -75,6 +76,10 @@ public class Presents {
     @ConfigDir(sharedRoot = false)
     private Path defaultConfigDir;
 
+    @Inject
+    @DefaultConfig(sharedRoot = false)
+    private Path defaultConfig;
+
     private PresentManager presentManager;
     private RandomPresentManager randomPresentManager;
     private PresentDeliveryLocationManager presentDeliveryLocationManager;
@@ -92,6 +97,10 @@ public class Presents {
         return defaultConfigDir;
     }
 
+    public Path getDefaultConfig() {
+        return defaultConfig;
+    }
+
     @Listener
     public void onServerInit(GameInitializationEvent event) {
 
@@ -99,14 +108,6 @@ public class Presents {
         PresentData.registerData();
 
         ConfigManager.registerSerializers();
-        try {
-            presentManager = ConfigManager.loadPresentManager(this);
-            randomPresentManager = ConfigManager.loadRandomPresentManager(this);
-            presentDeliveryLocationManager = ConfigManager.loadPresentDeliveryLocationManager(this);
-            naughtyListManager = ConfigManager.loadNaughtyListManager(this);
-        } catch (IOException | ObjectMappingException e) {
-            logger.error("Error loading configs! Error: " + e.getMessage());
-        }
 
         //Register commands
         CommandRegister.registerCmds(this);
@@ -114,7 +115,6 @@ public class Presents {
 
     @Listener
     public void onServerStop(GameStoppedServerEvent event) {
-
         try {
             ConfigManager.savePresentManager(presentManager, this);
             ConfigManager.saveRandomPresentManager(randomPresentManager, this);
@@ -128,6 +128,15 @@ public class Presents {
 
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
+
+        try {
+            presentManager = ConfigManager.loadPresentManager(this);
+            randomPresentManager = ConfigManager.loadRandomPresentManager(this);
+            presentDeliveryLocationManager = ConfigManager.loadPresentDeliveryLocationManager(this);
+            naughtyListManager = ConfigManager.loadNaughtyListManager(this);
+        } catch (IOException | ObjectMappingException e) {
+            logger.error("Error loading configs! Error: " + e.getMessage());
+        }
 
         // Log Start Up to Console
         getLogger().info(

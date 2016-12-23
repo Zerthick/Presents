@@ -54,7 +54,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getNode("locationData").getValue(TypeToken.of(PresentDeliveryLocationManager.class));
+            return node.getNode("locationData").getValue(TypeToken.of(PresentDeliveryLocationManager.class), new PresentDeliveryLocationManager(new HashMap<>()));
         } else {
             return new PresentDeliveryLocationManager(new HashMap<>());
         }
@@ -75,7 +75,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getNode("presentData").getValue(TypeToken.of(PresentManager.class));
+            return node.getNode("presentData").getValue(TypeToken.of(PresentManager.class), new PresentManager(new HashMap<>()));
         } else {
             return new PresentManager(new HashMap<>());
         }
@@ -96,7 +96,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getNode("randomPresentData").getValue(TypeToken.of(RandomPresentManager.class));
+            return node.getNode("randomPresentData").getValue(TypeToken.of(RandomPresentManager.class), new RandomPresentManager(new HashMap<>()));
         } else {
             return new RandomPresentManager(new HashMap<>());
         }
@@ -117,7 +117,7 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getNode("naughtyListData").getValue(TypeToken.of(NaughtyListManager.class));
+            return node.getNode("naughtyListData").getValue(TypeToken.of(NaughtyListManager.class), new NaughtyListManager(new HashSet<>()));
         } else {
             return new NaughtyListManager(new HashSet<>());
         }

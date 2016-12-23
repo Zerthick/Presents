@@ -49,7 +49,7 @@ public class PresentDeliveryLocationManagerSerializer implements TypeSerializer<
 
     @Override
     public void serialize(TypeToken<?> type, PresentDeliveryLocationManager obj, ConfigurationNode value) throws ObjectMappingException {
-        value.setValue(new TypeToken<Map<UUID, Location<World>>>() {
+        value.getNode("locations").setValue(new TypeToken<Map<UUID, Location<World>>>() {
                        },
                 obj.getPresentDeliveryLocations());
     }
