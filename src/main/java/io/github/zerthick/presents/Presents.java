@@ -27,9 +27,12 @@ import io.github.zerthick.presents.present.PresentManager;
 import io.github.zerthick.presents.present.RandomPresentManager;
 import io.github.zerthick.presents.present.data.PresentData;
 import io.github.zerthick.presents.present.data.PresentDataKeys;
+import io.github.zerthick.presents.util.config.ConfigManager;
+import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.slf4j.Logger;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.block.tileentity.carrier.Chest;
+import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.Listener;
@@ -39,6 +42,7 @@ import org.spongepowered.api.event.filter.Getter;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.event.game.state.GameStoppedServerEvent;
 import org.spongepowered.api.event.item.inventory.InteractItemEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -49,8 +53,9 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -66,6 +71,11 @@ public class Presents {
     @Inject
     private PluginContainer instance;
 
+    //Config Stuff
+    @Inject
+    @ConfigDir(sharedRoot = false)
+    private Path defaultConfigDir;
+
     private PresentManager presentManager;
     private RandomPresentManager randomPresentManager;
     private PresentDeliveryLocationManager presentDeliveryLocationManager;
@@ -79,19 +89,42 @@ public class Presents {
         return instance;
     }
 
+    public Path getDefaultConfigDir() {
+        return defaultConfigDir;
+    }
+
     @Listener
     public void onServerInit(GameInitializationEvent event) {
 
         //Register DataManipulator
         PresentData.registerData();
 
-        presentManager = new PresentManager(new HashMap<>());
-        randomPresentManager = new RandomPresentManager(new HashMap<>());
-        presentDeliveryLocationManager = new PresentDeliveryLocationManager(new HashMap<>());
-        naughtyListManager = new NaughtyListManager(new HashSet<>());
+        ConfigManager.registerSerializers();
+        try {
+            presentManager = ConfigManager.loadPresentManager(this);
+            randomPresentManager = ConfigManager.loadRandomPresentManager(this);
+            presentDeliveryLocationManager = ConfigManager.loadPresentDeliveryLocationManager(this);
+            naughtyListManager = ConfigManager.loadNaughtyListManager(this);
+        } catch (IOException | ObjectMappingException e) {
+            logger.error("Error loading configs! Error: " + e.getMessage());
+        }
 
         //Register commands
         CommandRegister.registerCmds(this);
+    }
+
+    @Listener
+    public void onServerStop(GameStoppedServerEvent event) {
+
+        try {
+            ConfigManager.savePresentManager(presentManager, this);
+            ConfigManager.saveRandomPresentManager(randomPresentManager, this);
+            ConfigManager.savePresentDeliveryLocationManager(presentDeliveryLocationManager, this);
+            ConfigManager.saveNaughyListManager(naughtyListManager, this);
+        } catch (IOException | ObjectMappingException e) {
+            logger.error("Error saving configs! Error: " + Arrays.toString(e.getStackTrace()));
+        }
+
     }
 
     @Listener
