@@ -20,10 +20,7 @@
 package io.github.zerthick.presents.cmd;
 
 import io.github.zerthick.presents.Presents;
-import io.github.zerthick.presents.cmd.cmdexecutors.PresentsDeliverExecutor;
-import io.github.zerthick.presents.cmd.cmdexecutors.PresentsDeliveryLocationExecutor;
-import io.github.zerthick.presents.cmd.cmdexecutors.PresentsExecutor;
-import io.github.zerthick.presents.cmd.cmdexecutors.PresentsSendExecutor;
+import io.github.zerthick.presents.cmd.cmdexecutors.*;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
@@ -33,8 +30,15 @@ public class CommandRegister {
 
     public static void registerCmds(Presents plugin) {
 
+        CommandSpec presentsCreateRandom = CommandSpec.builder()
+                .permission("presents.command.createrandom")
+                .arguments(GenericArguments.optional(GenericArguments.integer(CommandArgs.ITEM_WEIGHT)))
+                .description(Text.of("Create random present item"))
+                .executor(new PresentsCreateRandomExecutor(plugin))
+                .build();
+
         CommandSpec presentsDeliveryLocation = CommandSpec.builder()
-                .permission("presents.command.deliveryLocation")
+                .permission("presents.command.deliverylocation")
                 .arguments(GenericArguments.optional(GenericArguments.user(CommandArgs.RECEIVER)))
                 .description(Text.of("Set delivery location of a use"))
                 .executor(new PresentsDeliveryLocationExecutor(plugin))
@@ -60,6 +64,7 @@ public class CommandRegister {
                 .child(presentsDeliver, "deliver")
                 .child(presentsSend, "send")
                 .child(presentsDeliveryLocation, "deliveryLocation", "devloc")
+                .child(presentsCreateRandom, "createRandom", "rand")
                 .build();
 
         Sponge.getCommandManager().register(plugin, presents, "presents", "gifts");

@@ -134,7 +134,7 @@ public class Presents {
                             chest.getInventory().offer(ItemStack.of(ItemTypes.COAL, ThreadLocalRandom.current().nextInt(1, 17)));
                         }
                     } else if(!randomPresentManager.isEmpty()){
-                        randomPresentManager.nextPresents(5).forEach(present -> chest.getInventory().offer(present.toItemStack()));
+                        randomPresentManager.nextPresentItems(5).forEach(presentItem -> chest.getInventory().offer(new Present(presentItem, "Santa Clause", "").toItemStack()));
                     }
                 });
             }
@@ -151,5 +151,9 @@ public class Presents {
 
     public boolean hasPresentDeliveryLocation(User user) {
         return presentDeliveryLocationManager.hasPresentDeliveryLocation(user);
+    }
+
+    public void createRandomPresent(ItemStack present, double weight) {
+        randomPresentManager.addPresent(present, weight);
     }
 }

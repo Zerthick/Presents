@@ -20,6 +20,7 @@
 package io.github.zerthick.presents.present;
 
 import io.github.zerthick.presents.util.random.RandomCollection;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,25 +28,25 @@ import java.util.Map;
 
 public class RandomPresentManager {
 
-    private RandomCollection<Present> presentRandomCollection;
+    private RandomCollection<ItemStack> presentRandomCollection;
 
-    public RandomPresentManager(Map<Double, Present> weightMap) {
+    public RandomPresentManager(Map<Double, ItemStack> weightMap) {
         presentRandomCollection = new RandomCollection<>();
         weightMap.forEach((aDouble, present) -> presentRandomCollection.add(aDouble, present));
     }
 
-    public void addPresent(Present present, double weight) {
-        presentRandomCollection.add(weight, present);
+    public void addPresent(ItemStack presentItem, double weight) {
+        presentRandomCollection.add(weight, presentItem);
     }
 
-    public Present nextPresent() {
+    public ItemStack nextPresentItem() {
         return presentRandomCollection.next();
     }
 
-    public Collection<Present> nextPresents(int amount) {
-        Collection<Present> presents = new ArrayList<>(amount);
+    public Collection<ItemStack> nextPresentItems(int amount) {
+        Collection<ItemStack> presents = new ArrayList<>(amount);
         for(int i = 0; i < amount; i++) {
-            presents.add(nextPresent());
+            presents.add(nextPresentItem());
         }
         return presents;
     }
@@ -54,7 +55,7 @@ public class RandomPresentManager {
         return presentRandomCollection.isEmpty();
     }
 
-    public Map<Double, Present> getPresentWeightMap() {
+    public Map<Double, ItemStack> getPresentItemWeightMap() {
         return presentRandomCollection.getWeightMap();
     }
 }
