@@ -1,6 +1,6 @@
 # Presents! [![Github All Releases](https://img.shields.io/github/downloads/zerthick/Presents/total.svg)](https://github.com/Zerthick/Presents/releases) [![GitHub issues](https://img.shields.io/github/issues/zerthick/Presents.svg)](https://github.com/Zerthick/Presents/issues) [![license](https://img.shields.io/github/license/zerthick/Presents.svg)](https://github.com/Zerthick/Presents/blob/master/LICENSE.txt)
 Presents! is a simple gift sharing plugin, players can send gifts to each other and recieve randomly generated presents. 
-When the `/presents deliver` command is executed, a chest will be spawned at each player's delivery location and filled with presents!
+When the `/presents deliver` command is executed, a chest will be spawned at each player's delivery location and filled with presents! To open a present, hold it in your hand and right-click!
  
 ##Commands
 
