@@ -43,8 +43,9 @@ public class RandomPresentManagerSerializer implements TypeSerializer<RandomPres
                 }
         );
         int defaultRandomPresentAmount = value.getNode("defaultRandomPresentAmount").getInt();
+        String coalSender = value.getNode("coalSender").getString();
 
-        return new RandomPresentManager(doubleItemStackSnapshotMap, defaultRandomPresentAmount);
+        return new RandomPresentManager(doubleItemStackSnapshotMap, defaultRandomPresentAmount, coalSender);
     }
 
     @Override
@@ -53,5 +54,6 @@ public class RandomPresentManagerSerializer implements TypeSerializer<RandomPres
                                                  },
                 obj.getPresentWeightMap());
         value.getNode("defaultRandomPresentAmount").setValue(TypeToken.of(Integer.class), obj.getDefaultRandomPresentAmount());
+        value.getNode("coalSender").setValue(TypeToken.of(String.class), obj.getCoalSender());
     }
 }

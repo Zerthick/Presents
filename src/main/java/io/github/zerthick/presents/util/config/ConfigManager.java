@@ -96,9 +96,9 @@ public class ConfigManager {
 
         if (Files.exists(configDir)) {
             CommentedConfigurationNode node = loader.load();
-            return node.getNode("randomPresentData").getValue(TypeToken.of(RandomPresentManager.class), new RandomPresentManager(new HashMap<>(), 5));
+            return node.getNode("randomPresentData").getValue(TypeToken.of(RandomPresentManager.class), new RandomPresentManager(new HashMap<>(), 5, "The Grinch"));
         } else {
-            return new RandomPresentManager(new HashMap<>(), 5);
+            return new RandomPresentManager(new HashMap<>(), 5, "The Grinch");
         }
     }
 

@@ -30,6 +30,13 @@ public class CommandRegister {
 
     public static void registerCmds(Presents plugin) {
 
+        CommandSpec setCoalSender = CommandSpec.builder()
+                .permission("presents.command.set.coalsender")
+                .arguments(GenericArguments.remainingJoinedStrings(CommandArgs.SENDER))
+                .description(Text.of("Set the name of the person who sends coal"))
+                .executor(new SetCoalSenderExecutor(plugin))
+                .build();
+
         CommandSpec setNaughty = CommandSpec.builder()
                 .permission("presents.command.set.naughty")
                 .arguments(GenericArguments.user(CommandArgs.RECEIVER), GenericArguments.bool(CommandArgs.NAUGHTY))
@@ -78,6 +85,7 @@ public class CommandRegister {
                 .child(setNaughty, "naughty")
                 .child(presentsSetRandom, "randomDefault")
                 .child(presentsDeliveryLocation, "deliveryLocation")
+                .child(setCoalSender, "coalSender")
                 .build();
 
         CommandSpec presents = CommandSpec.builder()

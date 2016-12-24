@@ -30,12 +30,14 @@ public class RandomPresentManager {
     private RandomCollection<Present> presentRandomCollection;
 
     private int defaultRandomPresentAmount;
+    private String coalSender;
 
-    public RandomPresentManager(Map<Double, Present> presentWeightMap, int defaultPresentAmount) {
+    public RandomPresentManager(Map<Double, Present> presentWeightMap, int defaultPresentAmount, String coalSender) {
         presentRandomCollection = new RandomCollection<>();
         presentWeightMap.forEach((aDouble, present) -> presentRandomCollection.add(aDouble, present));
 
         this.defaultRandomPresentAmount = defaultPresentAmount;
+        this.coalSender = coalSender;
     }
 
     public void addPresent(Present present, double weight) {
@@ -72,5 +74,13 @@ public class RandomPresentManager {
 
     public void setDefaultRandomPresentAmount(int defaultRandomPresentAmount) {
         this.defaultRandomPresentAmount = defaultRandomPresentAmount;
+    }
+
+    public String getCoalSender() {
+        return coalSender;
+    }
+
+    public void setCoalSender(String coalSender) {
+        this.coalSender = coalSender;
     }
 }
