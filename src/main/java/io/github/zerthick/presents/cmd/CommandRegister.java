@@ -60,7 +60,7 @@ public class CommandRegister {
                 .build();
 
         CommandSpec presentsDeliveryLocation = CommandSpec.builder()
-                .permission("presents.command.set.deliverylocation")
+                .permission("presents.command.set.deliverylocation.self")
                 .arguments(GenericArguments.optional(GenericArguments.user(CommandArgs.RECEIVER)))
                 .description(Text.of("Set delivery location of a use"))
                 .executor(new PresentsDeliveryLocationExecutor(plugin))
