@@ -173,7 +173,7 @@ public class Presents {
                         //Naughty players get coal!
                         for (int i = 0; i < randomPresentManager.getDefaultRandomPresentAmount(); i++) {
                             ItemStackSnapshot coalItemStack = ItemStack.of(ItemTypes.COAL, ThreadLocalRandom.current().nextInt(1, 17)).createSnapshot();
-                            chest.getInventory().offer(new Present(coalItemStack, "Santa Clause", "").toItemStack());
+                            chest.getInventory().offer(new Present(coalItemStack, "Unknown", "").toItemStack());
                         }
                     } else if(!randomPresentManager.isEmpty()){
                         randomPresentManager.nextPresentItems().forEach(presentItem -> chest.getInventory().offer(presentItem.toItemStack()));
