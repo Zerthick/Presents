@@ -19,9 +19,9 @@
 
 package io.github.zerthick.presents.present.data;
 
-import io.github.zerthick.presents.present.data.Builder.PresentDataManipulatorBuilder;
-import io.github.zerthick.presents.present.data.Immutable.ImmutablePresentItemData;
-import io.github.zerthick.presents.present.data.Mutable.PresentItemData;
+import io.github.zerthick.presents.present.data.builder.PresentDataManipulatorBuilder;
+import io.github.zerthick.presents.present.data.immutable.ImmutablePresentItemData;
+import io.github.zerthick.presents.present.data.mutable.PresentItemData;
 import org.spongepowered.api.Sponge;
 
 public class PresentData {

@@ -17,11 +17,11 @@
  * along with Presents.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.github.zerthick.presents.present.data.Builder;
+package io.github.zerthick.presents.present.data.builder;
 
-import io.github.zerthick.presents.present.data.Immutable.ImmutablePresentItemData;
-import io.github.zerthick.presents.present.data.Mutable.PresentItemData;
 import io.github.zerthick.presents.present.data.PresentDataKeys;
+import io.github.zerthick.presents.present.data.immutable.ImmutablePresentItemData;
+import io.github.zerthick.presents.present.data.mutable.PresentItemData;
 import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.manipulator.DataManipulatorBuilder;

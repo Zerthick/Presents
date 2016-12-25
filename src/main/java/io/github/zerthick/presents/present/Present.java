@@ -20,7 +20,7 @@
 package io.github.zerthick.presents.present;
 
 import com.google.common.collect.ImmutableList;
-import io.github.zerthick.presents.present.data.Mutable.PresentItemData;
+import io.github.zerthick.presents.present.data.mutable.PresentItemData;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
