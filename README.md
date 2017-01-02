@@ -14,7 +14,7 @@ When the `/presents deliver` command is executed, a chest will be spawned at eac
 `/presents set coalSender <Name>` - Sets the name of the person who sends coal! (Default: The Grinch)  
     
 ##Permissions  
-`presents.command`  
+`presents.command.info`  
 `presents.command.send`  
 `presents.command.deliver`  
 `presents.command.create.random`  
