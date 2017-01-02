@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016  Zerthick
+ * Copyright (C) 2017  Zerthick
  *
  * This file is part of Presents.
  *
@@ -61,7 +61,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Plugin(
         id = "presents",
         name = "Presents",
-        version = "1.0.1",
+        version = "1.0.2",
         description = "A simple gift giving plugin",
         authors = {
                 "Zerthick"

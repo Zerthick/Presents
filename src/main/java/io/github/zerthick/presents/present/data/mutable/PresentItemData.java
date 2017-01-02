@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016  Zerthick
+ * Copyright (C) 2017  Zerthick
  *
  * This file is part of Presents.
  *
@@ -62,7 +62,7 @@ public class PresentItemData extends AbstractSingleData<ItemStackSnapshot, Prese
     @Override
     public Optional<PresentItemData> from(DataContainer container) {
         if(container.contains(PresentDataKeys.PRESENT_ITEM.getQuery())) {
-            container.getObject(PresentDataKeys.PRESENT_ITEM.getQuery(), ItemStackSnapshot.class)
+            container.getSerializable(PresentDataKeys.PRESENT_ITEM.getQuery(), ItemStackSnapshot.class)
                     .ifPresent(this::setValue);
             return Optional.of(this);
         }
