@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016  Zerthick
+ * Copyright (C) 2018  Zerthick
  *
  * This file is part of Presents.
  *
@@ -21,7 +21,6 @@ package io.github.zerthick.presents.cmd.cmdexecutors;
 
 import io.github.zerthick.presents.Presents;
 import io.github.zerthick.presents.cmd.CommandArgs;
-import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
@@ -38,7 +37,7 @@ public class SetNaughtyExecutor extends AbstractCommandExecutor {
     }
 
     @Override
-    public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+    public CommandResult execute(CommandSource src, CommandContext args) {
 
         Optional<User> userOptional = args.getOne(CommandArgs.RECEIVER);
         Optional<Boolean> naughtyBooleanOptional = args.getOne(CommandArgs.NAUGHTY);
