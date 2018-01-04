@@ -22,12 +22,22 @@ package io.github.zerthick.presents.present.data;
 import io.github.zerthick.presents.present.data.builder.PresentDataManipulatorBuilder;
 import io.github.zerthick.presents.present.data.immutable.ImmutablePresentItemData;
 import io.github.zerthick.presents.present.data.mutable.PresentItemData;
-import org.spongepowered.api.Sponge;
+import org.spongepowered.api.data.DataRegistration;
+import org.spongepowered.api.plugin.PluginContainer;
 
 public class PresentData {
 
-    public static void registerData() {
-        Sponge.getDataManager().register(PresentItemData.class, ImmutablePresentItemData.class, new PresentDataManipulatorBuilder());
+    public static void registerData(PluginContainer container) {
+
+        PresentDataKeys.init();
+
+        DataRegistration.<PresentItemData, ImmutablePresentItemData>builder()
+                .dataClass(PresentItemData.class)
+                .immutableClass(ImmutablePresentItemData.class)
+                .builder(new PresentDataManipulatorBuilder())
+                .manipulatorId("present_item")
+                .dataName("Present Item Data")
+                .buildAndRegister(container);
     }
 
 }

@@ -26,7 +26,7 @@ import org.spongepowered.api.text.Text;
 public class ItemUtils {
 
     public static Text getItemDisplayName(ItemStack itemStack) {
-        return itemStack.get(Keys.DISPLAY_NAME).orElse(Text.of(itemStack.getItem().getName()));
+        return itemStack.get(Keys.DISPLAY_NAME).orElse(Text.of(itemStack.getType().getName()));
     }
 
 }

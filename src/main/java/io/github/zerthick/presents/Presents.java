@@ -36,8 +36,6 @@ import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.event.cause.NamedCause;
 import org.spongepowered.api.event.filter.Getter;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -101,7 +99,7 @@ public class Presents {
     public void onServerInit(GameInitializationEvent event) {
 
         //Register DataManipulator
-        PresentData.registerData();
+        PresentData.registerData(getInstance());
 
         ConfigManager.registerSerializers();
 
@@ -160,7 +158,8 @@ public class Presents {
             Location<World> deliveryLocation = uuidLocationEntry.getValue();
 
             if(deliveryLocation.getBlock().getType() == BlockTypes.AIR) {
-                deliveryLocation.setBlockType(BlockTypes.CHEST, Cause.of(NamedCause.source(instance)));
+
+                deliveryLocation.setBlockType(BlockTypes.CHEST);
                 deliveryLocation.getTileEntity().ifPresent(tileEntity -> {
                     Chest chest = (Chest) tileEntity;
 

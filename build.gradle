@@ -18,20 +18,29 @@
  */
 
 plugins {
-    id 'org.spongepowered.plugin' version '0.7'
-    id "com.qixalite.spongestart" version "1.5.2"
+    id 'org.spongepowered.plugin' version '0.8.1'
+    id 'java'
+    id "com.qixalite.spongestart" version "1.6.2"
 }
 
 group 'io.github.zerthick'
+version '1.1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+}
 
 spongestart {
     eula true
 
-    //optional configs
-    spongeVanillaBuild '1.10.2-5.1.0-BETA-366'
-    vanillaServerFolder 'run/vanilla'
+    minecraft '1.12.2'
+    type 'stable'
 }
 
 dependencies {
-    compile 'org.spongepowered:spongeapi:5.0.0'
+    compile 'org.spongepowered:spongeapi:7.0.0'
 }
