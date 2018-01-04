@@ -59,7 +59,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @Plugin(
         id = "presents",
         name = "Presents",
-        version = "1.0.2",
         description = "A simple gift giving plugin",
         authors = {
                 "Zerthick"
