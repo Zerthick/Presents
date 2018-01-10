@@ -33,7 +33,7 @@ public class PresentDataKeys {
         PRESENT_ITEM = Key.builder()
                 .type(new TypeToken<Value<ItemStackSnapshot>>() {})
                 .query(DataQuery.of("PresentItem"))
-                .id("presents:present_item")
+                .id("present_item")
                 .name("Present Item")
                 .build();
     }

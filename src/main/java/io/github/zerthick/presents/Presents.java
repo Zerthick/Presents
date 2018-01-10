@@ -53,7 +53,6 @@ import org.spongepowered.api.world.World;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Plugin(
@@ -152,11 +151,9 @@ public class Presents {
     }
 
     public void deliverPresents() {
-        presentDeliveryLocationManager.getPresentDeliveryLocations().entrySet().parallelStream().forEach(uuidLocationEntry -> {
-            UUID receiverUUID = uuidLocationEntry.getKey();
-            Location<World> deliveryLocation = uuidLocationEntry.getValue();
+        presentDeliveryLocationManager.getPresentDeliveryLocations().forEach((receiverUUID, deliveryLocation) -> {
 
-            if(deliveryLocation.getBlock().getType() == BlockTypes.AIR) {
+            if (deliveryLocation.getBlock().getType() == BlockTypes.AIR) {
 
                 deliveryLocation.setBlockType(BlockTypes.CHEST);
                 deliveryLocation.getTileEntity().ifPresent(tileEntity -> {
@@ -167,13 +164,13 @@ public class Presents {
                             .ifPresent(presents -> presents.forEach(present -> chest.getInventory().offer(present.toItemStack())));
 
                     //Give random-presents
-                    if(naughtyListManager.isNaughty(receiverUUID)) {
+                    if (naughtyListManager.isNaughty(receiverUUID)) {
                         //Naughty players get coal!
                         for (int i = 0; i < randomPresentManager.getDefaultRandomPresentAmount(); i++) {
                             ItemStackSnapshot coalItemStack = ItemStack.of(ItemTypes.COAL, ThreadLocalRandom.current().nextInt(1, 17)).createSnapshot();
                             chest.getInventory().offer(new Present(coalItemStack, randomPresentManager.getCoalSender(), "").toItemStack());
                         }
-                    } else if(!randomPresentManager.isEmpty()){
+                    } else if (!randomPresentManager.isEmpty()) {
                         randomPresentManager.nextPresentItems().forEach(presentItem -> chest.getInventory().offer(presentItem.toItemStack()));
                     }
                 });
